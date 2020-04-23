@@ -1,32 +1,41 @@
 import React, { useState, useEffect } from 'react';
-import { useWindowDimensions } from '../utils/dimensions';
-import { RightTimer } from './RightTimer';
-import { BottomTimer } from './BottomTimer';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
 
-const MAX_TIME = 120;
+import { parseTimerProps } from '../utils/timer';
+import { onTimerEndedAction } from './../actions';
+import { GAME_TIME } from '../constants';
 
-export const Timer = () => {
-  const { height, width } = useWindowDimensions();
-  const timerRight = width > height;
-  const [seconds, setSeconds] = useState(MAX_TIME);
+const StyledTimer = styled.div`
+  font-family: 'Lucida Console', Monaco, monospace;
+  font-weight: bold;
+  width: 100%;
+  float: right;
+  height: center;
+  vertical-align: center;
+  text-align: right;
+`;
+
+const TimerComponent = ({ timerEnd }: { timerEnd: () => { type: string } }) => {
+  const [seconds, setSeconds] = useState(GAME_TIME);
   useEffect(() => {
-    let interval: number = 0;
+    let interval = 0;
     if (seconds > 0) {
       interval = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
       }, 1000);
     } else if (seconds <= 0) {
+      timerEnd();
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [seconds]);
+  }, [seconds, timerEnd]);
 
-  const props = {
-    seconds,
-    maxSeconds: MAX_TIME,
-  };
+  const { display } = parseTimerProps(seconds);
 
-  const TimerComponent = timerRight ? RightTimer : BottomTimer;
-
-  return <TimerComponent {...props} />;
+  return <StyledTimer>{display}</StyledTimer>;
 };
+
+const mapDispatchToProps = { timerEnd: onTimerEndedAction };
+
+export const Timer = connect(null, mapDispatchToProps)(TimerComponent);

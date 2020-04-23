@@ -1,20 +1,32 @@
 import React from 'react';
-import { Board } from './Board';
-import { Timer } from './Timer';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 
+import { Board } from './Board';
+import { Timer } from './Timer';
+import { Tally } from './Tally';
+import { Splash } from './Splash';
+
 const GameCenter = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  font-family: Verdana;
+  font-color: black;
 `;
 
-export const Game = () => {
+const GameComponent = ({ displaySplash, inPlay }: { displaySplash: boolean; inPlay: boolean }) => {
   return (
     <GameCenter>
-      <Board />
-      <Timer />
+      {displaySplash ? (
+        <Splash />
+      ) : (
+        <>
+          {inPlay ? <Timer /> : <Tally />}
+          <Board />
+        </>
+      )}
     </GameCenter>
   );
 };
+
+const mapStateToProps = ({ displaySplash, inPlay }: { displaySplash: boolean; inPlay: boolean }) => ({ displaySplash, inPlay });
+
+export const Game = connect(mapStateToProps)(GameComponent);

@@ -1,44 +1,95 @@
-import React from 'react';
+import React, { createRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { useWindowDimensions } from '../utils/dimensions';
+import { connect } from 'react-redux';
 
-const underlined = ['N', 'M', 'W'];
+import { onTileSelectAction } from '../actions';
+import { TileType } from '../types';
+import { UNDERLINED, DOWN_SCALE } from '../constants';
 
-const DieFace = styled.div<{ size: number }>`
+const DieFace = styled.div<{ selected: boolean; inPlay: boolean; size: number }>`
   box-sizing: border-box;
   text-align: center;
   vertical-align: middle;
   display: table-cell;
   border: 1px solid black;
-  border-radius: 20px;
-  color: black;
-  background-color: white;
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
+  border-radius: ${({ inPlay }) => (inPlay ? 20 : 20 * DOWN_SCALE)}px;
+  background-color: ${({ selected }) => (selected ? 'yellow' : 'white')};
+  width: ${({ inPlay, size }) => (inPlay ? size : size * DOWN_SCALE)}px;
+  height: ${({ inPlay, size }) => (inPlay ? size : size * DOWN_SCALE)}px;
 `;
 
-const DieText = styled.span<{ size: number; underline: boolean }>`
-  font-family: verdana;
-  font-size: ${(props) => props.size - 50}px;
-  text-decoration: ${(props) => (props.underline ? 'underline' : 'none')};
+const Text = styled.div<{ inPlay: boolean; size: number; underline: boolean }>`
+  margin: 0 auto;
+  width: 75%;
+  height: 75%;
+  font-size: ${({ inPlay, size }) => (inPlay ? size - 50 : (size - 50) * DOWN_SCALE)}px;
+  text-decoration: ${({ underline }) => (underline ? 'underline' : 'none')};
 `;
 
 interface TileInterface {
-  value: string;
+  tile: TileType; // passed down
+  size: number; // passed down
+  coord: {
+    // redux state
+    x: number;
+    y: number;
+  };
+  selecting: boolean; // redux state
+  currentTiles: Array<TileType>; // redux state
+  inPlay: boolean; // redux state
+  tileSelect: (tile: TileType) => { type: string; current: TileType }; // redux dispatch
 }
 
-export const Tile = (props: TileInterface) => {
-  const { height, width } = useWindowDimensions();
-  const max = width < height ? width : height;
-  const diff = width < height ? 0 : 10;
-  const size = max / 4 - diff;
-  const underline = underlined.includes(props.value);
-  //console.log('size', size);
+// Check if the touch is over the current tile
+const inCurrentTile = (el: HTMLDivElement, coord: { x: number; y: number }): boolean => {
+  let inColumn = el.offsetLeft < coord.x && coord.x < el.offsetLeft + el.offsetWidth;
+  let inRow = el.offsetTop < coord.y && coord.y < el.offsetTop + el.offsetHeight;
+  return inColumn && inRow;
+};
+
+const TileComponent = ({ tile, size, coord, selecting, currentTiles, inPlay, tileSelect }: TileInterface) => {
+  const underline = UNDERLINED.includes(tile.value);
+
+  // useful for getting co-ordinates of the selection area (Text)
+  const textRef = createRef<HTMLDivElement>();
+
+  const selected = inPlay ? currentTiles.map((x) => x.id).includes(tile.id) : false;
+
+  useEffect(() => {
+    const el = textRef.current;
+    // If user is still selecting and the touch is over the tile
+    if (selecting && el && inCurrentTile(el, coord)) {
+      tileSelect(tile);
+    }
+  }, [coord, selecting, tile, tileSelect, textRef]);
   return (
-    <DieFace size={size}>
-      <DieText size={size} underline={underline}>
-        {props.value}
-      </DieText>
+    <DieFace size={size} selected={selected} inPlay={inPlay}>
+      <Text ref={textRef} size={size} underline={underline} inPlay={inPlay}>
+        {tile.value}
+      </Text>
     </DieFace>
   );
 };
+const mapStateToProps = ({
+  coord,
+  selecting,
+  currentTiles,
+  inPlay,
+}: {
+  coord: {
+    x: number;
+    y: number;
+  };
+  selecting: boolean;
+  currentTiles: Array<TileType>;
+  inPlay: boolean;
+}) => ({
+  coord,
+  selecting,
+  currentTiles,
+  inPlay,
+});
+
+const mapDispatchToProps = { tileSelect: onTileSelectAction };
+
+export const Tile = connect(mapStateToProps, mapDispatchToProps)(TileComponent);
