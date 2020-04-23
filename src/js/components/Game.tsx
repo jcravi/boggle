@@ -9,7 +9,6 @@ import { Splash } from './Splash';
 import { Popup } from './Popup';
 
 const GameCenter = styled.div`
-  overscroll-behavior: none;
   font-family: Verdana;
   font-color: black;
 `;

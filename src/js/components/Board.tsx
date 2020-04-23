@@ -15,6 +15,8 @@ const PlayTiles = styled.div`
   border-spacing: 4px;
   background-color: #3366ff;
   border-radius: 20px;
+  overflow: auto;
+  overscroll-behavior: contain;
 `;
 
 const FixedTiles = styled.div`
