@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/pages/jcravi/boggle/static/js/main.801df3fd.chunk.js",
-    "main.js.map": "/pages/jcravi/boggle/static/js/main.801df3fd.chunk.js.map",
-    "runtime-main.js": "/pages/jcravi/boggle/static/js/runtime-main.fd35ba6d.js",
-    "runtime-main.js.map": "/pages/jcravi/boggle/static/js/runtime-main.fd35ba6d.js.map",
-    "static/js/2.91a2d219.chunk.js": "/pages/jcravi/boggle/static/js/2.91a2d219.chunk.js",
-    "static/js/2.91a2d219.chunk.js.map": "/pages/jcravi/boggle/static/js/2.91a2d219.chunk.js.map",
-    "index.html": "/pages/jcravi/boggle/index.html",
-    "precache-manifest.cd637d627b4e60bb33758916d44abbe3.js": "/pages/jcravi/boggle/precache-manifest.cd637d627b4e60bb33758916d44abbe3.js",
-    "service-worker.js": "/pages/jcravi/boggle/service-worker.js",
-    "static/js/2.91a2d219.chunk.js.LICENSE.txt": "/pages/jcravi/boggle/static/js/2.91a2d219.chunk.js.LICENSE.txt"
+    "main.js": "/boggle/static/js/main.801df3fd.chunk.js",
+    "main.js.map": "/boggle/static/js/main.801df3fd.chunk.js.map",
+    "runtime-main.js": "/boggle/static/js/runtime-main.3bb36a3c.js",
+    "runtime-main.js.map": "/boggle/static/js/runtime-main.3bb36a3c.js.map",
+    "static/js/2.bd04b175.chunk.js": "/boggle/static/js/2.bd04b175.chunk.js",
+    "static/js/2.bd04b175.chunk.js.map": "/boggle/static/js/2.bd04b175.chunk.js.map",
+    "index.html": "/boggle/index.html",
+    "precache-manifest.6b46037577255978e93aaa55019ee6f2.js": "/boggle/precache-manifest.6b46037577255978e93aaa55019ee6f2.js",
+    "service-worker.js": "/boggle/service-worker.js",
+    "static/js/2.bd04b175.chunk.js.LICENSE.txt": "/boggle/static/js/2.bd04b175.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.fd35ba6d.js",
-    "static/js/2.91a2d219.chunk.js",
+    "static/js/runtime-main.3bb36a3c.js",
+    "static/js/2.bd04b175.chunk.js",
     "static/js/main.801df3fd.chunk.js"
   ]
 }
