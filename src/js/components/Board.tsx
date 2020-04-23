@@ -9,14 +9,12 @@ import { useWindowDimensions } from '../utils/dimensions';
 import { BOARD_DIMENSIONS } from '../constants';
 
 const PlayTiles = styled.div`
-  float: right;
   display: table;
   border-collapse: separate;
   border-spacing: 4px;
   background-color: #3366ff;
   border-radius: 20px;
-  overflow: auto;
-  overscroll-behavior: contain;
+  touch-action: none;
 `;
 
 const FixedTiles = styled.div`
@@ -66,7 +64,13 @@ const BoardComponent = ({ inPlay, stateSeed, onTouchMove, onTouchEnd, setNextSee
   setNextSeed(nextSeed);
 
   return (
-    <Tiles onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+    <Tiles
+      onTouchMove={(e) => {
+        e.preventDefault();
+        onTouchMove(e);
+      }}
+      onTouchEnd={onTouchEnd}
+    >
       {board.map((row, rIndex) => (
         <TileRow key={rIndex}>
           {row.map((value, index) => {
