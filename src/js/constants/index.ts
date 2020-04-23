@@ -12,7 +12,7 @@ export const BOARD_DIMENSIONS = 4;
 
 export const DOWN_SCALE = 0.4;
 
-export const GAME_TIME = 100;
+export const GAME_TIME = 5;
 
 export const SEED = {
   SIZE: 4,

@@ -64,13 +64,7 @@ const BoardComponent = ({ inPlay, stateSeed, onTouchMove, onTouchEnd, setNextSee
   setNextSeed(nextSeed);
 
   return (
-    <Tiles
-      onTouchMove={(e) => {
-        e.preventDefault();
-        onTouchMove(e);
-      }}
-      onTouchEnd={onTouchEnd}
-    >
+    <Tiles onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
       {board.map((row, rIndex) => (
         <TileRow key={rIndex}>
           {row.map((value, index) => {

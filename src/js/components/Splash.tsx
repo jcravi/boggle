@@ -6,6 +6,7 @@ import { startGameAction } from '../actions';
 import { SPLASHES } from '../constants';
 
 const StyledSplash = styled.div`
+  font-size: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
