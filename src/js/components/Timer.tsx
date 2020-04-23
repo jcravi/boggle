@@ -9,11 +9,9 @@ import { GAME_TIME } from '../constants';
 const StyledTimer = styled.div`
   font-family: 'Lucida Console', Monaco, monospace;
   font-weight: bold;
-  width: 100%;
-  float: right;
-  height: center;
-  vertical-align: center;
-  text-align: right;
+  position: fixed;
+  top: 5px;
+  right: 5px;
 `;
 
 const TimerComponent = ({ timerEnd }: { timerEnd: () => { type: string } }) => {

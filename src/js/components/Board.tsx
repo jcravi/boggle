@@ -20,7 +20,6 @@ const PlayTiles = styled.div`
 const FixedTiles = styled.div`
   position: fixed;
   right: 5px;
-  float: right;
   display: table;
   border-collapse: separate;
   border-spacing: 4px;

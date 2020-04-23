@@ -10,9 +10,9 @@ export const ACTIONS = {
 
 export const BOARD_DIMENSIONS = 4;
 
-export const DOWN_SCALE = 1.0 / BOARD_DIMENSIONS;
+export const DOWN_SCALE = 0.4;
 
-export const GAME_TIME = 5;
+export const GAME_TIME = 120;
 
 export const SEED = {
   SIZE: 4,

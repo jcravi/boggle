@@ -102,7 +102,7 @@ const TallyComponent = ({
                 }
               }}
             >
-              {x.word}
+              {x.word.toLowerCase()}
             </StyledWord>
           ))}
         </StyledWords>

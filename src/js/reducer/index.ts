@@ -13,6 +13,7 @@ const initialState = {
     y: 0,
   },
   currentTiles: new Array<TileType>(), // What tile selection is currently in progress
+  latestWord: '', // Latest word
   words: new Array<Array<TileType>>(), // Successfully selected words so far. I'm keeping this as TileTypes as in the future I may want to animate word selections
   seed: 'blah', // The starting seed
   nextSeed: '', // The next seed. I am storing this since I want to make a predictable sequence of new games
@@ -83,8 +84,10 @@ export const reducer = (state = initialState, action: ActionType) => {
           )
         ) {
           words.push(state.currentTiles);
+          return { ...state, selecting: false, currentTiles: new Array<TileType>(), words, latestWord: word };
+        } else {
+          return { ...state, selecting: false, currentTiles: new Array<TileType>() };
         }
-        return { ...state, selecting: false, currentTiles: new Array<TileType>(), words };
       } else {
         return state;
       }

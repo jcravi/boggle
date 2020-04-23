@@ -6,6 +6,7 @@ import { Board } from './Board';
 import { Timer } from './Timer';
 import { Tally } from './Tally';
 import { Splash } from './Splash';
+import { Popup } from './Popup';
 
 const GameCenter = styled.div`
   font-family: Verdana;
@@ -19,7 +20,14 @@ const GameComponent = ({ displaySplash, inPlay }: { displaySplash: boolean; inPl
         <Splash />
       ) : (
         <>
-          {inPlay ? <Timer /> : <Tally />}
+          {inPlay ? (
+            <div style={{ marginBottom: '5px' }}>
+              <Popup />
+              <Timer />
+            </div>
+          ) : (
+            <Tally />
+          )}
           <Board />
         </>
       )}
@@ -27,6 +35,9 @@ const GameComponent = ({ displaySplash, inPlay }: { displaySplash: boolean; inPl
   );
 };
 
-const mapStateToProps = ({ displaySplash, inPlay }: { displaySplash: boolean; inPlay: boolean }) => ({ displaySplash, inPlay });
+const mapStateToProps = ({ displaySplash, inPlay }: { displaySplash: boolean; inPlay: boolean }) => ({
+  displaySplash,
+  inPlay,
+});
 
 export const Game = connect(mapStateToProps)(GameComponent);
