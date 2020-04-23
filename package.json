@@ -2,6 +2,7 @@
   "name": "boggle",
   "version": "0.1.0",
   "private": false,
+  "license": "MIT",
   "homepage": "/boggle",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
