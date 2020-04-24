@@ -1,4 +1,5 @@
 import seedrandom from 'seedrandom';
+
 import { dies } from './../data/dies.json';
 import { BOARD_DIMENSIONS, SEED, INDEX } from '../constants';
 import { TileType } from '../types';
@@ -80,6 +81,8 @@ export const score = (word: string): number => {
   }
 };
 
+// Word should be valid per Boggle rules
+// And should not have been entered before
 export const isWordAllowed = (word: string, existingWords: string[]): boolean => {
   if (word.length < 3 || existingWords.includes(word)) {
     // Two letter words not allowed
@@ -94,21 +97,26 @@ export const isWordAllowed = (word: string, existingWords: string[]): boolean =>
 // Check to see if the current tile is adjacent to the last one
 // Is there a better looking way to do this?
 export const isTileAdjacent = (last: TileType, current: TileType): boolean => {
-  const [lastColumn, lastRow] = last.id.split('');
-  const [currentColumn, currentRow] = current.id.split('');
-
-  const lastColumnIndex = INDEX.COLUMNS.indexOf(lastColumn);
-  const lastRowIndex = INDEX.ROWS.indexOf(lastRow);
-
-  const currentColumnIndex = INDEX.COLUMNS.indexOf(currentColumn);
-  const currentRowIndex = INDEX.ROWS.indexOf(currentRow);
+  const { column: lastColumnIndex, row: lastRowIndex } = toId(last.id);
+  const { column: currentColumnIndex, row: currentRowIndex } = toId(current.id);
 
   const allowedColumn = Math.abs(lastColumnIndex - currentColumnIndex) <= 1;
   const allowedRow = Math.abs(lastRowIndex - currentRowIndex) <= 1;
+
   return allowedColumn && allowedRow;
 };
 
-// I moved this here so that only one file understands how the construct/deconstruct the key/id
+// helper method to convert a string id to the positional index on the board
+const toId = (id: string): { column: number; row: number } => {
+  const [columnValue, rowValue] = id.split('');
+
+  const column = INDEX.COLUMNS.indexOf(columnValue);
+  const row = INDEX.ROWS.indexOf(rowValue);
+
+  return { column, row };
+};
+
+// I moved this here so that only one file understands how to construct/deconstruct the key/id
 export const getId = (column: number, row: number): string => {
   return INDEX.COLUMNS[column] + INDEX.ROWS[row];
 };

@@ -1,6 +1,6 @@
 import React, { createRef, useEffect } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { onTileSelectAction } from '../actions';
 import { TileType } from '../types';
@@ -26,19 +26,11 @@ const Text = styled.div<{ inPlay: boolean; size: number; underline: boolean }>`
   text-decoration: ${({ underline }) => (underline ? 'underline' : 'none')};
 `;
 
-interface TileInterface {
-  tile: TileType; // passed down
-  size: number; // passed down
-  coord: {
-    // redux state
-    x: number;
-    y: number;
-  };
-  selecting: boolean; // redux state
-  currentTiles: Array<TileType>; // redux state
-  inPlay: boolean; // redux state
-  tileSelect: (tile: TileType) => { type: string; current: TileType }; // redux dispatch
-}
+type TileComponentType = {
+  tile: TileType;
+  size: number;
+} & ReturnType<typeof mapStateToProps> &
+  typeof mapDispatchToProps;
 
 // Check if the touch is over the current tile
 const inCurrentTile = (el: HTMLDivElement, coord: { x: number; y: number }): boolean => {
@@ -47,7 +39,7 @@ const inCurrentTile = (el: HTMLDivElement, coord: { x: number; y: number }): boo
   return inColumn && inRow;
 };
 
-const TileComponent = ({ tile, size, coord, selecting, currentTiles, inPlay, tileSelect }: TileInterface) => {
+const TileComponent = ({ tile, size, coord, selecting, currentTiles, inPlay, tileSelect }: TileComponentType) => {
   const underline = UNDERLINED.includes(tile.value);
 
   // useful for getting co-ordinates of the selection area (Text)

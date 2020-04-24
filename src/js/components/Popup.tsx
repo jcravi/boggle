@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { TileType } from '../types';
 
@@ -18,7 +18,7 @@ const StyledPopup = styled.span<{ show: boolean }>`
   transition: opacity ${({ show }) => (show ? '0' : '1000')}ms linear;
 `;
 
-const PopupComponent = ({ word, words }: { word: string; words: Array<Array<TileType>> }) => {
+const PopupComponent = ({ word, words }: ReturnType<typeof mapStateToProps>) => {
   const [show, setShow] = useState(true);
   const [display, setDisplay] = useState('Good Luck!');
 

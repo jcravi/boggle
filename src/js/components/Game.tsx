@@ -13,7 +13,7 @@ const GameCenter = styled.div`
   font-color: black;
 `;
 
-const GameComponent = ({ displaySplash, inPlay }: { displaySplash: boolean; inPlay: boolean }) => {
+const GameComponent = ({ displaySplash, inPlay }: ReturnType<typeof mapStateToProps>) => {
   return (
     <GameCenter>
       {displaySplash ? (

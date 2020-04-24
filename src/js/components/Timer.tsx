@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { parseTimerProps } from '../utils/timer';
 import { onTimerEndedAction } from './../actions';
@@ -14,7 +14,7 @@ const StyledTimer = styled.div`
   right: 5px;
 `;
 
-const TimerComponent = ({ timerEnd }: { timerEnd: () => { type: string } }) => {
+const TimerComponent = ({ timerEnd }: typeof mapDispatchToProps) => {
   const [seconds, setSeconds] = useState(GAME_TIME);
   useEffect(() => {
     let interval = 0;
@@ -29,7 +29,7 @@ const TimerComponent = ({ timerEnd }: { timerEnd: () => { type: string } }) => {
     return () => clearInterval(interval);
   }, [seconds, timerEnd]);
 
-  const { display } = parseTimerProps(seconds);
+  const display = parseTimerProps(seconds);
 
   return <StyledTimer>{display}</StyledTimer>;
 };

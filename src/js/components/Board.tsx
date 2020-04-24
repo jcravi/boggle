@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { newBoard, getId } from '../utils/board';
 import { Tile } from './Tile';
@@ -31,13 +31,8 @@ const TileRow = styled.div`
   display: table-row;
 `;
 
-interface BoardProps {
-  inPlay: boolean; // redux
-  stateSeed: string; // redux
-  onTouchMove: (e: React.TouchEvent<HTMLDivElement>) => any; // redux
-  onTouchEnd: () => any; // redux
-  setNextSeed: (seed: string) => void; //redux
-}
+type BoardProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
 
 const BoardComponent = ({ inPlay, stateSeed, onTouchMove, onTouchEnd, setNextSeed }: BoardProps) => {
   // Get the seed from url or from state

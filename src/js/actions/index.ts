@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ACTIONS } from '../constants';
 import { TileType } from '../types';
 

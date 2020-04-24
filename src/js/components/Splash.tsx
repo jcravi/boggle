@@ -13,7 +13,7 @@ const StyledSplash = styled.div`
   height: 200px;
 `;
 
-const SplashComponent = ({ startGame }: { startGame: () => { type: string } }) => {
+const SplashComponent = ({ startGame }: typeof mapDispatchToProps) => {
   const [text, setText] = useState(SPLASHES.READY);
   const [seconds, setSeconds] = useState(3);
 

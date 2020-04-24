@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 import { TileType, FoundWords } from '../types';
 import { tilesToString } from '../utils/tiles';
@@ -71,13 +71,9 @@ const tallyText = (total: number): string => {
   }
 };
 
-const TallyComponent = ({
-  words,
-  newGame,
-}: {
-  words: TileType[][];
-  newGame: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}) => {
+type TallyType = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
+
+const TallyComponent = ({ words, newGame }: TallyType) => {
   // the initial state of words as string and default as none are cancelled
   const initState = words
     .map((x) => ({ word: tilesToString(x), cancelled: false } as FoundWords))
