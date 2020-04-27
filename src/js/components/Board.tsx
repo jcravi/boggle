@@ -4,12 +4,13 @@ import styled from 'styled-components';
 
 import { newBoard, getId } from '../utils/board';
 import { Tile } from './Tile';
-import { onTouchMoveAction, onTouchEndAction, setNextSeedAction } from '../actions';
+import { onPointerDownAction, onPointerMoveAction, onPointerUpAction, setNextSeedAction } from '../actions';
 import { useWindowDimensions } from '../utils/dimensions';
 import { BOARD_DIMENSIONS } from '../constants';
 
 const PlayTiles = styled.div`
   display: table;
+  margin: auto;
   border-collapse: separate;
   border-spacing: 4px;
   background-color: #3366ff;
@@ -18,7 +19,9 @@ const PlayTiles = styled.div`
 `;
 
 const FixedTiles = styled.div`
+  cursor: pointer;
   position: fixed;
+  top: 30px;
   right: 5px;
   display: table;
   border-collapse: separate;
@@ -33,8 +36,7 @@ const TileRow = styled.div`
 
 type BoardProps = ReturnType<typeof mapStateToProps> & typeof mapDispatchToProps;
 
-
-const BoardComponent = ({ inPlay, stateSeed, onTouchMove, onTouchEnd, setNextSeed }: BoardProps) => {
+const BoardComponent = ({ inPlay, stateSeed, onPointerDown, onPointerMove, onPointerUp, setNextSeed }: BoardProps) => {
   // Get the seed from url or from state
   const urlParams = new URLSearchParams(window.location.search);
   const seedParam = urlParams.get('seed');
@@ -59,7 +61,14 @@ const BoardComponent = ({ inPlay, stateSeed, onTouchMove, onTouchEnd, setNextSee
   setNextSeed(nextSeed);
 
   return (
-    <Tiles onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+    <Tiles
+      onPointerDown={onPointerDown}
+      onPointerMove={(e) => {
+        e.preventDefault();
+        onPointerMove(e);
+      }}
+      onPointerUp={onPointerUp}
+    >
       {board.map((row, rIndex) => (
         <TileRow key={rIndex}>
           {row.map((value, index) => {
@@ -75,8 +84,9 @@ const BoardComponent = ({ inPlay, stateSeed, onTouchMove, onTouchEnd, setNextSee
 const mapStateToProps = ({ inPlay, seed }: { inPlay: boolean; seed: string }) => ({ inPlay, stateSeed: seed });
 
 const mapDispatchToProps = {
-  onTouchMove: onTouchMoveAction,
-  onTouchEnd: onTouchEndAction,
+  onPointerDown: onPointerDownAction,
+  onPointerMove: onPointerMoveAction,
+  onPointerUp: onPointerUpAction,
   setNextSeed: setNextSeedAction,
 };
 

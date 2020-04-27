@@ -14,6 +14,7 @@ const Container = styled.div`
 const StyledWords = styled.ol``;
 
 const StyledWord = styled.li<{ cancelled: boolean }>`
+  cursor: pointer;
   font-size: 1.2em;
   margin: 0.5em 0;
   text-decoration: ${({ cancelled }) => (cancelled ? 'line-through' : 'none')};
@@ -23,6 +24,7 @@ const StyledWord = styled.li<{ cancelled: boolean }>`
 // https://www.bestcssbuttongenerator.com/#/28
 const Button = styled.button`
   margin-bottom: 1em;
+  margin-top: 1em;
   box-shadow: inset 0px 1px 0px 0px #ffffff;
   background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
   background-color: #ffffff;
@@ -91,13 +93,15 @@ const TallyComponent = ({ words, newGame }: TallyType) => {
 
   return (
     <Container>
+      <div>Click on words that are invalid or taken</div>
       {actualWords.length > 0 && (
         <StyledWords>
           {actualWords.map((x, i) => (
             <StyledWord
               key={`word-${i}`}
               cancelled={x.cancelled}
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 if (!scoreVisible) {
                   toggle(actualWords, setActualWords, i);
                 }
@@ -110,9 +114,9 @@ const TallyComponent = ({ words, newGame }: TallyType) => {
       )}
       {scoreVisible ? (
         <>
-          <div>Score: {total}</div>
+          <div style={{ marginTop: '0.5em' }}>Score: {total}</div>
           <div style={{ marginTop: '0.5em' }}>{tallyText(total)}</div>
-          <Button autoFocus style={{ marginTop: '1em' }} onClick={newGame}>
+          <Button autoFocus onClick={newGame}>
             New Game
           </Button>
         </>

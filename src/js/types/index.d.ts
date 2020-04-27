@@ -5,13 +5,13 @@ export type TileType = {
 
 export type ActionType = {
   type: string;
-  selecting?: boolean;
-  coord?: {
+  selecting: boolean;
+  coord: {
     x: number;
     y: number;
   };
-  current?: TileType;
-  seed?: string;
+  current: TileType;
+  seed: string;
 };
 
 export type FoundWords = {

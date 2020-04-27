@@ -3,13 +3,17 @@ import React from 'react';
 import { ACTIONS } from '../constants';
 import { TileType } from '../types';
 
-export const onTouchMoveAction = (e: React.TouchEvent<HTMLDivElement>) => ({
-  type: ACTIONS.TOUCH_START,
-  coord: { x: e.touches[0].clientX, y: e.touches[0].clientY },
+export const onPointerDownAction = (e: React.PointerEvent<HTMLDivElement>) => ({
+  type: ACTIONS.SELECT_START,
 });
 
-export const onTouchEndAction = () => ({
-  type: ACTIONS.TOUCH_END,
+export const onPointerMoveAction = (e: React.PointerEvent<HTMLDivElement>) => ({
+  type: ACTIONS.SELECT,
+  coord: { x: e.clientX, y: e.clientY },
+});
+
+export const onPointerUpAction = (e: React.PointerEvent<HTMLDivElement>) => ({
+  type: ACTIONS.SELECT_END,
 });
 
 export const onTileSelectAction = (tile: TileType) => ({

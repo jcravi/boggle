@@ -7,6 +7,7 @@ import { TileType } from '../types';
 import { UNDERLINED, DOWN_SCALE } from '../constants';
 
 const DieFace = styled.div<{ selected: boolean; inPlay: boolean; size: number }>`
+  cursor: pointer;
   box-sizing: border-box;
   text-align: center;
   vertical-align: middle;
@@ -19,6 +20,7 @@ const DieFace = styled.div<{ selected: boolean; inPlay: boolean; size: number }>
 `;
 
 const Text = styled.div<{ inPlay: boolean; size: number; underline: boolean }>`
+  cursor: pointer;
   margin: 0 auto;
   width: 75%;
   height: 75%;

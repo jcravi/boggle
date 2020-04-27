@@ -21,9 +21,16 @@ const initialState = {
 
 export const reducer = (state = initialState, action: ActionType) => {
   switch (action.type) {
-    case ACTIONS.TOUCH_START:
+    case ACTIONS.SELECT_START:
       if (state.inPlay) {
-        return { ...state, selecting: true, coord: action.coord };
+        return { ...state, selecting: true };
+      } else {
+        return state;
+      }
+
+    case ACTIONS.SELECT:
+      if (state.inPlay && state.selecting) {
+        return { ...state, coord: action.coord };
       } else {
         return state;
       }
@@ -73,8 +80,8 @@ export const reducer = (state = initialState, action: ActionType) => {
         return state;
       }
 
-    case ACTIONS.TOUCH_END:
-      if (state.inPlay) {
+    case ACTIONS.SELECT_END:
+      if (state.inPlay && state.selecting) {
         const word = tilesToString(state.currentTiles);
         const { words } = state;
         if (
@@ -84,9 +91,16 @@ export const reducer = (state = initialState, action: ActionType) => {
           )
         ) {
           words.push(state.currentTiles);
-          return { ...state, selecting: false, currentTiles: new Array<TileType>(), words, latestWord: word };
+          return {
+            ...state,
+            selecting: false,
+            currentTiles: new Array<TileType>(),
+            words,
+            latestWord: word,
+            coord: { x: 0, y: 0 },
+          };
         } else {
-          return { ...state, selecting: false, currentTiles: new Array<TileType>() };
+          return { ...state, selecting: false, currentTiles: new Array<TileType>(), coord: { x: 0, y: 0 } };
         }
       } else {
         return state;
